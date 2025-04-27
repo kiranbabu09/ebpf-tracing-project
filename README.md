@@ -1,7 +1,10 @@
 # eBPF Tracing Attack and Mitigation Using consume_skb Tracepoint
-
 ## Overview
-This project demonstrates how eBPF programs can be used to trace kernel events and how privileged containers can misuse tracepoints like `skb:consume_skb`. It also proposes a mitigation strategy using automated detection and removal of suspicious programs.
+This project was completed as part of the **Topics in Networks (CS5639)** course at IIT Palakkad under the guidance of **Dr. Anish Hirwe**.
+
+It demonstrates how eBPF programs can be used to trace kernel events and how privileged containers can misuse tracepoints like `skb:consume_skb`.  
+It also proposes a mitigation strategy using automated detection and removal of suspicious programs.
+
 
 ## Files
 
@@ -75,18 +78,18 @@ You will see:
 
 Thus, the system becomes clean from rogue eBPF activity.
 
-## Environment
+### Environment
 
 - Ubuntu 22.04
 - Docker (privileged container)
 - bpftool, clang/llvm, libbpf
 
-## Instructor
+### Instructor
 
 Dr. Anish Hirwe  
 Assistant Professor, IIT Palakkad
 
-## Author
+### Author
 
 Chikkala Kiran Babu  
 Ph.D. Student, Department of Computer Science and Engineering  
