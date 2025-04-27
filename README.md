@@ -35,6 +35,45 @@ This project demonstrates how eBPF programs can be used to trace kernel events a
     ```bash
     sudo ./bpf_kill_skb.sh
     ```
+## Mitigation Details
+
+The mitigation script `bpf_kill_skb.sh` works as follows:
+
+1. It searches for all pinned and in-memory eBPF programs that are attached to the `skb:consume_skb` tracepoint.
+2. It detaches the program from the tracepoint if it is still attached.
+3. It deletes the pinned object from `/sys/fs/bpf/`.
+4. It deletes any in-memory rogue eBPF programs by ID using `bpftool`.
+
+### Before Running Mitigation
+
+When we run:
+
+```bash
+bpftool prog show
+
+You will see output like:
+
+ID 42  TAG abc123def456...  Type tracepoint  Name trace_consume_skb
+loaded_at 2025-04-27T10:00:00+0000  uid 0
+pinned /sys/fs/bpf/dns_sniper
+
+After Running Mitigation
+
+After executing:
+
+sudo ./bpf_kill_skb.sh
+
+When we run:
+
+bpftool prog show
+
+You will see:
+
+(No programs attached to tracepoint)
+
+✅ This confirms that the malicious eBPF program has been detached and removed from the kernel.
+
+Thus, the system becomes clean from rogue eBPF activity.
 
 ## Environment
 
@@ -42,13 +81,13 @@ This project demonstrates how eBPF programs can be used to trace kernel events a
 - Docker (privileged container)
 - bpftool, clang/llvm, libbpf
 
+## Instructor
+
+Dr. Anish Hirwe  
+Assistant Professor, IIT Palakkad
+
 ## Author
 
 Chikkala Kiran Babu  
 Ph.D. Student, Department of Computer Science and Engineering  
 Indian Institute of Technology (IIT) Palakkad
-
-## Instructor
-
-Dr. Anish Hirwe  
-Assistant Professor, IIT Palakkad
